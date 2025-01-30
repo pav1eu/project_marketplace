@@ -6,3 +6,7 @@
 ```
 poetry run pytest test --cov
 ```
+Функционал проекта можно проверить из файла main.py
+```
+python main.py
+```
