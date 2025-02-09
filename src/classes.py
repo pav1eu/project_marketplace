@@ -1,5 +1,6 @@
 class Product:
     """Представляет имя продукта и его описание с ценой и количеством"""
+
     name: str
     description: str
     price: float
@@ -8,8 +9,28 @@ class Product:
     def __init__(self, name, description, price, quantity):
         self.name = name
         self.description = description
-        self.price = price
+        self.__price = price
         self.quantity = quantity
+
+    @classmethod
+    def new_product(cls, new_product: dict):
+        """Возвращает созданный объект класса Product из параметров товара в словаре"""
+        name = new_product["name"]
+        description = new_product["description"]
+        price = new_product["price"]
+        quantity = new_product["quantity"]
+        return cls(name, description, price, quantity)
+
+    @property
+    def price(self):
+        return self.__price
+
+    @price.setter
+    def price(self, price):
+        if price <= 0:
+            self.__price = "Цена не должна быть нулевая или отрицательная"
+        else:
+            self.__price = price
 
 
 class Category:
@@ -17,6 +38,7 @@ class Category:
     Представляет категорию продукта с описанием и списком продуктов,
     а так же ведет подсчёт количества категорий и продуктов
     """
+
     name: str
     description: str
     products: list
@@ -26,7 +48,20 @@ class Category:
     def __init__(self, name, description, products):
         self.name = name
         self.description = description
-        self.products = list(products)
+        self.__products = list(products)
 
         Category.category_count += 1
         Category.product_count += len(products)
+
+    def add_product(self, products):
+        self.__products.append(products)
+        Category.product_count += 1
+
+    @property
+    def products(self):
+        return "; ".join(
+            [
+                f"{product.name}, {product.price} руб.; Остаток: {product.quantity} шт."
+                for product in self.__products
+            ]
+        )
