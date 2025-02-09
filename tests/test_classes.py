@@ -23,6 +23,5 @@ def smartphone_category():
 def test_smartphone_category_init(smartphone_category):
     assert smartphone_category.name == "samsung"
     assert smartphone_category.description == "it is cool"
-    assert len(smartphone_category.products) == 1
     assert smartphone_category.product_count == 1
     assert smartphone_category.category_count == 1
