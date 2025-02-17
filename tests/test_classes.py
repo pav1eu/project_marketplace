@@ -1,6 +1,7 @@
 import pytest
 
 from src.classes import Category, Product
+from src.subclasses import LawnGrass, Smartphone
 
 
 @pytest.fixture
@@ -57,8 +58,28 @@ def test_smartphone_category_str(smartphone_category):
 def test_smartphone_category_add_product(smartphone_category):
     new_product = Product("xiaomi", "it is more cooler", 13000.0, 5)
     smartphone_category.add_product(new_product)
-    assert smartphone_category.product_count == 2
+    assert smartphone_category.product_count == 4
 
 
 def test_smartphone_category_products(smartphone_category):
     assert smartphone_category.products == "samsung, 17000.0 руб. Остаток 10 шт."
+
+
+@pytest.fixture
+def samsung_product2():
+    return Smartphone("samsung", "it is cool", 17000.0, 10, 25, "Mega", 11, "pink")
+
+
+@pytest.fixture
+def grass_product():
+    return LawnGrass("grass", "very green grass", 150.0, 200, "USA", "5 sec", "yellow")
+
+
+def test_invalid_sum(samsung_product2, grass_product):
+    with pytest.raises(TypeError):
+        samsung_product2 + grass_product
+
+
+def test_add_product_not_product(smartphone_category):
+    with pytest.raises(TypeError):
+        smartphone_category.add_product("not a product")
