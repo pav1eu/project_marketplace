@@ -44,8 +44,8 @@ def smartphone_category(samsung_product):
 def test_smartphone_category_init(smartphone_category):
     assert smartphone_category.name == "Смартфоне"
     assert (
-        smartphone_category.description
-        == "Смартфоны, как средство не только коммуникации"
+            smartphone_category.description
+            == "Смартфоны, как средство не только коммуникации"
     )
     assert smartphone_category.product_count == 1
     assert smartphone_category.category_count == 1
@@ -83,3 +83,8 @@ def test_invalid_sum(samsung_product2, grass_product):
 def test_add_product_not_product(smartphone_category):
     with pytest.raises(TypeError):
         smartphone_category.add_product("not a product")
+
+
+def test_mixing_product():
+    product1 = Product("not a product", "not a product", 10, 1)
+    assert repr(product1) == "Product('not a product', 'not a product', 10, 1)"
