@@ -44,8 +44,8 @@ def smartphone_category(samsung_product):
 def test_smartphone_category_init(smartphone_category):
     assert smartphone_category.name == "Смартфоне"
     assert (
-            smartphone_category.description
-            == "Смартфоны, как средство не только коммуникации"
+        smartphone_category.description
+        == "Смартфоны, как средство не только коммуникации"
     )
     assert smartphone_category.product_count == 1
     assert smartphone_category.category_count == 1
@@ -88,3 +88,13 @@ def test_add_product_not_product(smartphone_category):
 def test_mixing_product():
     product1 = Product("not a product", "not a product", 10, 1)
     assert repr(product1) == "Product('not a product', 'not a product', 10, 1)"
+
+
+def test_rises_quantity_init():
+    with pytest.raises(ValueError):
+        product1 = Product("not a product", "not a product", 10, 0)
+
+
+def test_raises_category_middle_price():
+    category1 = Category("not a category", "not a category", [])
+    assert category1.middle_price() == 0
