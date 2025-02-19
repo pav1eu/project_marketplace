@@ -31,7 +31,10 @@ class Product(MixinLog, BaseProduct):
         self.name = name
         self.description = description
         self.__price = price
-        self.quantity = quantity
+        if quantity <= 0:
+            raise ValueError("Товар с нулевым количеством не может быть добавлен")
+        else:
+            self.quantity = quantity
         super().__init__()
 
     def __str__(self):
@@ -102,3 +105,13 @@ class Category:
     @property
     def products(self):
         return "; ".join([str(product) for product in self.__products])
+
+    def middle_price(self) -> float:
+        """Метод для подсчёта среднего ценника товара."""
+        total = sum(product.price * product.quantity for product in self.__products)
+        try:
+            avg = total / len(self.__products)
+        except ZeroDivisionError:
+            return 0
+        else:
+            return round(avg, 2)
